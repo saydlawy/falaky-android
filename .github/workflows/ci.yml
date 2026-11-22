@@ -34,6 +34,16 @@ jobs:
       - name: Unit tests
         run: ./gradlew --no-daemon :core:model:test
 
+      - name: Build debug APK
+        run: ./gradlew --no-daemon :app:assembleDebug
+
+      - name: Upload debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: falaky-debug-apk
+          path: app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
+
       - name: Build release APK (unsigned, check only, never published)
         run: ./gradlew --no-daemon :app:assembleRelease
 
